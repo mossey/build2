@@ -689,6 +689,15 @@ label{
     background-position: center center;
     background-size: cover;
 }
+body {
+    background-image: url("../images/gizani.PNG");
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+
+}
+
 
 
 .wizard-container{

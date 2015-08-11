@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: moses
+ * Date: 8/9/15
+ * Time: 11:25 PM
+ */
 
 $db_database = 'book';
 $db_hostname = 'localhost';
@@ -11,10 +17,3 @@ if(!$db_server) die("Unable to connect to MYSQL: ". mysql_error());
 
 mysql_select_db($db_database)
 or die("Unable to connect to database: " . mysql_error());
-
-$sql = mysql_query("SELECT * FROM Events");
-if(!$sql) die("Unable to connect to MYSQL: ". mysql_error());
-$array= mysql_fetch_array($sql);
-$json=json_encode($array);
-echo ($json);
-?>
