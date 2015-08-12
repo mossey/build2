@@ -797,6 +797,9 @@ body {
 .wizard-card.ct-wizard-orange > ul > li.active a{
     background-color: #ff9500;
 }
+.wizard-card.ct-wizard-orange > ul > li >a:visited {
+    background-color: #000099;
+}
 .wizard-card.ct-wizard-red > ul > li.active a{
     background-color: #ff3b30;
 }

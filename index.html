@@ -12,17 +12,23 @@ require "fetch.php";
     <meta name="viewport" content="width=device-width" />
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDM2ba2FEiJ_0wog025THyXxT2NLKg_aLc"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script !src="">
+        $(document).ready(function() {
+            $("ul.tabs a").click(function() {
+                $(".pane div").hide();
+                $(this).parent().addClass('visited')
+                $($(this).attr("href")).show();
+            });
+        })
+    </script>
     <style>
-        body{
-
+        ul.tabs li.visited{
+            background:lime;
         }
     </style>
     <style>
-        li {
-            background-color: #fdb933;
-        }
-        .btn{
-            background-color: #fdb933;
+        a:visited{
+            background-color: #000099;
         }
     </style>
     <script id="source" language="javascript" type="text/javascript">
@@ -218,6 +224,7 @@ require "fetch.php";
                         	</h3>
                     	</div>
                     <ul>
+
                             <li><a href="#party" data-toggle="tab">1. Party Size</a></li>
                             <li><a href="#details" data-toggle="tab">2. Details </a></li>
                             <li><a href="#method" data-toggle="tab">3. Payment Method</a></li>
