@@ -19,35 +19,7 @@ require "fetch.php";
         });
 
     </script>
-    <script type="text/javascript">
-        // This identifies your website in the createToken call below
-        Stripe.setPublishableKey('pk_test_epuy9kWiGoIklHviDACQpUiw');
-        var stripeResponseHandler = function(status, response) {
-            var $form = $('#payment-form');
-            if (response.error) {
-                // Show the errors on the form
-                $form.find('.payment-errors').text(response.error.message);
-                $form.find('button').prop('disabled', false);
-            } else {
-                // token contains id, last4, and card type
-                var token = response.id;
-                // Insert the token into the form so it gets submitted to the server
-                $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-                // and re-submit
-                $form.get(0).submit();
-            }
-        };
-        jQuery(function($) {
-            $('#payment-form').submit(function(e) {
-                var $form = $(this);
-                // Disable the submit button to prevent repeated clicks
-                $form.find('button').prop('disabled', true);
-                Stripe.card.createToken($form, stripeResponseHandler);
-                // Prevent the form from submitting with the default action
-                return false;
-            });
-        });
-    </script>
+
     <script !src="">
         $(document).ready(function() {
             $("ul.tabs a").click(function() {
@@ -171,7 +143,7 @@ require "fetch.php";
 
             <!--      Wizard container        -->
             <div class="wizard-container">
-                <form action="processing.php" method="post">
+                <form action="processing.php" id="payment-form" method="post">
                 <div class="card wizard-card ct-wizard-orange" id="wizard">
 
                 <!--        You can switch "ct-wizard-azzure"  with one of the next bright colors: "ct-wizard-blue", "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red"             -->
@@ -239,7 +211,7 @@ require "fetch.php";
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sessions" id="inputID" value="1" checked="checked">
+                                            <input type="radio" name="sessions" id="inputID" value="2" checked="checked">
                                             Second Session 9.00-12.00am
                                         </label>
                                     </div>
@@ -427,7 +399,7 @@ require "fetch.php";
                                 <div class="col-sm-10" style="border: ">
                                     <div class="card" style="border: dashed">
                                         <div class="col-sm-7">
-                                            <input type="radio" value="card" name="pay" id="card"> Creditcard(Visa/ Mastercatd//American Express)
+                                            <input type="radio" value="card" name="payments" id="card"> Creditcard(Visa/ Mastercatd//American Express)
                                             <br>
                                             free
                                             <br>
@@ -444,7 +416,7 @@ require "fetch.php";
                                     <br>
                                     <div class="mpesa" style="border: dashed;">
                                         <div class="col-sm-7">
-                                            <input type="radio" name="pay" id="mpesa" value="mpesa">Mpesa
+                                            <input type="radio" name="payments" id="mpesa" value="mpesa">Mpesa
                                             <br>
                                             free
                                             <br>
@@ -479,7 +451,7 @@ require "fetch.php";
                                     <div id="mpesaProcedure" >
                                         <h4>Lipa na Mpesa Procedure</h4>
                                         <br>
-                                        <input type="text" placeholder="confirmation  Code" class="form-control">
+                                        <input type="text" placeholder="confirmation  Code" name="code" class="form-control">
                                         <br>
 
                                         <br>
