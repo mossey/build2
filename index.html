@@ -116,6 +116,12 @@ require "fetch.php";
             $("#btncard").hide();
             $("#btnmpesa").hide();
 
+            $('.mpesaProcedure').click(function(){
+                $(this).find('input[type=radio]').prop('checked', true);
+            })
+            $('.cardProcedure').click(function(){
+                $(this).find('input[type=radio]').prop('checked', true);
+            })
 
             $("input[id='card']").click(function () {
                 $("#btncard").show();
@@ -165,7 +171,7 @@ require "fetch.php";
 
             <!--      Wizard container        -->
             <div class="wizard-container">
-                <form action="" method="">
+                <form action="processing.php" method="post">
                 <div class="card wizard-card ct-wizard-orange" id="wizard">
 
                 <!--        You can switch "ct-wizard-azzure"  with one of the next bright colors: "ct-wizard-blue", "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red"             -->
@@ -538,7 +544,7 @@ require "fetch.php";
 
                                         </label>
 `
-                                        <span> / </span>
+                                        <span>  </span>
                                     </div>
 
                                     <button type="" style="background-color: orange; border-color: orange"

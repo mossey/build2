@@ -7,53 +7,37 @@
  */
 // this  is thee php file that will be useed in the processing of the  forms.
 // so first i will start by initializig the values
-require_once 'connections.php';
+
 
 
 // these are the details from the the person booking the ticket
-$fName=mysqli_real_escape_string($_POST['fName']);
-$lName=mysqli_real_escape_string($_POST['lName']);
-$email=mysqli_real_escape_string($_POST['email']);
-$phone=mysqli_real_escape_string($_POST['phone']);
-$allergies=mysqli_real_escape_string($_POST['allergies']);
-$partySize=mysqli_real_escape_string($_POST['oarty']);
-$token=mysqli_real_escape_string($_POST['']);
-$eventName=mysqli_real_escape_string($_POST['eventName']);
-$eventPrice=mysqli_real_escape_string($_POST['price']);
-$SittingName=mysqli_real_escape_string($_POST['sittingName']);
-$sittingTime=mysqli_real_escape_string($_POST['sittingTime']);
-$eventExtras=mysqli_real_escape_string($_POST['extras']);
-$eventLocation=mysqli_real_escape_string($_POST['location']);
 
 
 
 
-// heere i will do the select query that will fetch the info from the database
+$servername = "localhost";
+$username = "root";
+$password = "qwerty41";
+$dbname = "book";
 
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    // set the PDO error mode to exception
 
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// here i will initialize the values for the variables that were fetched from the database
-
-
-
-
-// here i will  process the payments for stripe
-
-if(){
-    //do stripe
+    $sql = "INSERT INTO attendees (fName, lName, email)
+    VALUES ('".$_POST['fName']."','".$_POST['lName']."','".$_POST['email']."')";
+    // use exec() because no results are returned
+    $conn->exec($sql);
+    echo "New record created successfully";
 }
-elseif  (){
-    //do mpesa
-}
-else{
-    echo "please pay";
+catch(PDOException $e)
+{
+    echo $sql . "<br>" . $e->getMessage();
 }
 
-
-
-
-
-
+$conn = null;
 
 
 // do emails
