@@ -12,45 +12,8 @@
 
 // these are the details from the the person booking the ticket
 
-echo $_POST["name"][0];
-echo $_POST["name"][1];
-echo $_POST["name"][2];
-echo $_POST["name"][3];
-echo $_POST["name"][4];
-echo $_POST["name"][5];
 
 
-$names ="";
-if(isset($_POST["namee"])){
-    foreach($_POST["namee"] as $key => $text_field){
-        $names .= $text_field .", ";
-    }
-}
-
-
-$emails ="";
-if(isset($_POST["emaill"])){
-    foreach($_POST["emaill"] as $key => $text_field){
-        $emails .= $text_field .", ";
-    }
-}
-
-
-$phones ="";
-if(isset($_POST["phonee"])){
-    foreach($_POST["phonee"] as $key => $text_field){
-        $phones .= $text_field .", ";
-    }
-}
-
-
-$allergies ="";
-if(isset($_POST["allergies"])){
-    foreach($_POST["allergies"] as $key => $text_field){
-        $allergies .= $text_field .", ";
-    }
-}
-/*
 $radio=$_POST['sessions'];
 $ePrice=$_POST['price'];
 $pSize=$_POST['party'];
@@ -67,7 +30,7 @@ else{
     $status=="confirmed";
 }
 
-
+/*
 require_once "vendor/autoload.php";
 $mail = new PHPMailer();
 
@@ -142,7 +105,39 @@ $mail->Subject = "Subject Text";
 } catch(\Stripe\Error\Card $e) {
     // The card has been declined
 }
-/*
+*/
+$names ="";
+if(isset($_POST["namee"])){
+    foreach($_POST["namee"] as $key => $text_field){
+        $names .= $text_field .", ";
+    }
+}
+
+
+$emails ="";
+if(isset($_POST["emaill"])){
+    foreach($_POST["emaill"] as $key => $text_field){
+        $emails .= $text_field .", ";
+    }
+}
+
+
+$phones ="";
+if(isset($_POST["phonee"])){
+    foreach($_POST["phonee"] as $key => $text_field){
+        $phones .= $text_field .", ";
+    }
+}
+
+
+$allergies ="";
+if(isset($_POST["allergies"])){
+    foreach($_POST["allergies"] as $key => $text_field){
+        $allergies .= $text_field .", ";
+    }
+}
+
+
 $servername = "localhost";
 $username = "root";
 $password = "qwerty41";
@@ -154,10 +149,15 @@ try {
 
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "INSERT INTO bookings (payMethod, code, eventID, Paid, SittingID,amountPaid)
+    $sql = "INSERT INTO bookings (payMethod, code, eventID, paid, sittingID, amountPaid)
     VALUES ('".$_POST['payments']."','".$_POST['code']."','".$_POST['eventID']."','$status','".$_POST['sessions']."',$amountPaid)";
     // use exec() because no results are returned
     $conn->exec($sql);
+    $last_id = $conn->lastInsertId();
+
+    $sql2 = "INSERT INTO attendees (fName, phone, email ,allergies, bookingID, bookerStatus)
+    VALUES ('$names','$phones','$emails','$allergies','$lastID','".$_POST['fName']."')";
+    $conn->exec($sql2);
     echo "New record created successfully";
 }
 catch(PDOException $e)
@@ -170,4 +170,3 @@ $conn = null;
 
 // do emails
 
-*/
