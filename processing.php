@@ -12,6 +12,45 @@
 
 // these are the details from the the person booking the ticket
 
+echo $_POST["name"][0];
+echo $_POST["name"][1];
+echo $_POST["name"][2];
+echo $_POST["name"][3];
+echo $_POST["name"][4];
+echo $_POST["name"][5];
+
+
+$names ="";
+if(isset($_POST["namee"])){
+    foreach($_POST["namee"] as $key => $text_field){
+        $names .= $text_field .", ";
+    }
+}
+
+
+$emails ="";
+if(isset($_POST["emaill"])){
+    foreach($_POST["emaill"] as $key => $text_field){
+        $emails .= $text_field .", ";
+    }
+}
+
+
+$phones ="";
+if(isset($_POST["phonee"])){
+    foreach($_POST["phonee"] as $key => $text_field){
+        $phones .= $text_field .", ";
+    }
+}
+
+
+$allergies ="";
+if(isset($_POST["allergies"])){
+    foreach($_POST["allergies"] as $key => $text_field){
+        $allergies .= $text_field .", ";
+    }
+}
+/*
 $radio=$_POST['sessions'];
 $ePrice=$_POST['price'];
 $pSize=$_POST['party'];
@@ -51,7 +90,6 @@ $mail->IsHTML(true);                                  // set email format to HTM
 $mail->Subject = "Thanks";
 $mail->Body    = file_get_contents("emal.html");
 //$mail->AltBody = "This is the body in plain text for non-HTML mail clients";
-
 if(!$mail->send())
 {
     echo "Mailer Error: " . $mail->ErrorInfo;
@@ -60,7 +98,12 @@ else
 {
     echo "Message has been sent successfully";
 }
-/*
+
+
+
+
+
+
 \Stripe\Stripe::setApiKey("pk_test_epuy9kWiGoIklHviDACQpUiw");
 
 // Get the credit card details submitted by the form
