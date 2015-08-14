@@ -122,36 +122,104 @@ try {
 
     $sql = "INSERT INTO bookings (payMethod, code, eventID, paid, sittingID, amountPaid)
     VALUES ('".$_POST['payments']."','".$_POST['code']."','".$_POST['eventID']."','$status','".$_POST['sessions']."',$amountPaid)";
+
     // use exec() because no results are returned
     $conn->exec($sql);
 
-    $last_id = $conn->lastInsertId();
-    $nameeee= $_POST['namee'];
-    $emailll = $_POST['emaill'];
-    $allergiesee = $_POST['allergiess'];
-    $phoneee = $_POST['phonee'];
-
-
-    foreach ($nameeee as $value1) {
-        foreach(emailll as $value2){
-            foreach( $allergiesee as $value3){
-                foreach($phoneee as $value4){
-                    $sql2= "INSERT INTO atttendees (fName, phone, email, allergies, boookingID, bookerStatus) VALUES ('$value1','$value4','$value2','$value3','$last_id','".$_POST['fName'].')";
-                    $conn->exec($sql2);
-                }
-            }
-
-        }
-}
-
+     $last_id= $conn->lastInsertId();
+    global$last_id;
 
 }
 catch(PDOException $e)
 {
     echo $sql . "<br>" . $e->getMessage();
+
 }
+
 
 $conn = null;
 
-// do emails
 
+$conn = mysqli_connect("localhost", "root", "qwerty41", "book");
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "INSERT INTO attendees (fName, lName, email,phone, allergies,bookerStatus,bookingID)
+VALUES ('".$_POST['fName']."', '".$_POST['lName']."','".$_POST['email']."','".$_POST['phone']."' ,'".$_POST['allergies']."','".$_POST['fName']."','$last_id')";
+
+if (mysqli_query($conn, $sql)) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+}
+
+mysqli_close($conn);
+
+try {
+    $pdo = new PDO('mysql:host=localhost;dbname=book;','root','qwerty41');
+
+
+//Output any connection error
+
+
+    $name ="";
+    if(isset($_POST["namee"])){
+        foreach($_POST["namee"] as $key => $text_field){
+            $name .= $text_field .", ";
+        }
+    }
+
+    $name=explode(',',($name));
+
+    $email ="";
+    if(isset($_POST["emaill"])){
+        foreach($_POST["emaill"] as $key => $text_field){
+            $email .= $text_field .", ";
+        }
+    }
+
+    $email=explode(',',($email));
+
+
+    $phone ="";
+    if(isset($_POST["phonee"])){
+        foreach($_POST["phonee"] as $key => $text_field){
+            $phone.= $text_field .", ";
+        }
+    }
+
+    $phone=explode(',',($phone));
+
+    $allergies ="";
+    if(isset($_POST["allergyy"])){
+        foreach($_POST["allergyy"] as $key => $text_field){
+            $allergies .= $text_field .", ";
+        }
+    }
+
+    $allergies=explode(',',($allergies));
+    $query=null;
+    $pdo;
+    $prepare;
+
+
+    for ($i = 0; $i < count($name); $i++) {
+
+        $query = $pdo->prepare("INSERT INTO attendees (fName, email, phone, allergies,bookerStatus,bookingID) VALUES (:name, :email, :phone ,:allergies,:bName,:id)");
+        $query->execute(array(
+            ":name" => $name[$i],
+            ":email" => $email[$i],
+            ":phone" => $phone[$i],
+            ":allergies" => $allergies[$i],
+            ":id"=>$last_id,
+            ":bName"=>$_POST['fName']
+        ));
+    }
+
+
+
+} catch(PDOException $e){
+    echo 'Connection failed'.$e->getMessage();
+}

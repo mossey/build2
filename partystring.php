@@ -46,6 +46,7 @@ $allergies=explode(',',($allergies));
     $pdo;
     $prepare;
 
+
 for ($i = 0; $i < count($name); $i++) {
 
     $query = $pdo->prepare("INSERT INTO attendees (fName, email, phone, allergies) VALUES (:name, :email, :phone ,:allergies)");
