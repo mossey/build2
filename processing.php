@@ -106,36 +106,7 @@ $mail->Subject = "Subject Text";
     // The card has been declined
 }
 */
-$names ="";
-if(isset($_POST["namee"])){
-    foreach($_POST["namee"] as $key => $text_field){
-        $names .= $text_field .", ";
-    }
-}
 
-
-$emails ="";
-if(isset($_POST["emaill"])){
-    foreach($_POST["emaill"] as $key => $text_field){
-        $emails .= $text_field .", ";
-    }
-}
-
-
-$phones ="";
-if(isset($_POST["phonee"])){
-    foreach($_POST["phonee"] as $key => $text_field){
-        $phones .= $text_field .", ";
-    }
-}
-
-
-$allergies ="";
-if(isset($_POST["allergies"])){
-    foreach($_POST["allergies"] as $key => $text_field){
-        $allergies .= $text_field .", ";
-    }
-}
 
 
 $servername = "localhost";
@@ -153,12 +124,27 @@ try {
     VALUES ('".$_POST['payments']."','".$_POST['code']."','".$_POST['eventID']."','$status','".$_POST['sessions']."',$amountPaid)";
     // use exec() because no results are returned
     $conn->exec($sql);
-    $last_id = $conn->lastInsertId();
 
-    $sql2 = "INSERT INTO attendees (fName, phone, email ,allergies, bookingID, bookerStatus)
-    VALUES ('$names','$phones','$emails','$allergies','$lastID','".$_POST['fName']."')";
-    $conn->exec($sql2);
-    echo "New record created successfully";
+    $last_id = $conn->lastInsertId();
+    $nameeee= $_POST['namee'];
+    $emailll = $_POST['emaill'];
+    $allergiesee = $_POST['allergiess'];
+    $phoneee = $_POST['phonee'];
+
+
+    foreach ($nameeee as $value1) {
+        foreach(emailll as $value2){
+            foreach( $allergiesee as $value3){
+                foreach($phoneee as $value4){
+                    $sql2= "INSERT INTO atttendees (fName, phone, email, allergies, boookingID, bookerStatus) VALUES ('$value1','$value4','$value2','$value3','$last_id','".$_POST['fName'].')";
+                    $conn->exec($sql2);
+                }
+            }
+
+        }
+}
+
+
 }
 catch(PDOException $e)
 {
@@ -166,7 +152,6 @@ catch(PDOException $e)
 }
 
 $conn = null;
-
 
 // do emails
 
